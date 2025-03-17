@@ -4,7 +4,8 @@ IS6941课程小组项目的代码仓库，聚焦机器学习在社交媒体数�
 
 ### 3月17日更新
 
-1. 对test_comments_data.csv中的内容进行了简单的情感分析。
+1. 对test_comments_data.csv进行了简单的情感分析；
+2. 对Haruhikage.txt进行了简单的情感分析。
 
 ### 3月16日更新
 

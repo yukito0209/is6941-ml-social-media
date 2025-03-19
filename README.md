@@ -17,3 +17,9 @@ IS6941课程小组项目的代码仓库，聚焦机器学习在社交媒体数�
 1. 初步编写完成了对bilibili视频评论区数据的爬虫代码;
 2. wdw早上7:45起床了 ^ ^ ；
 3. 初步编写完成了对网易云评论区数据进行爬取的代码。
+
+### LLM列表
+
+1. DeepSeek-R1-Distill-Qwen-1.5B：
+
+   https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B

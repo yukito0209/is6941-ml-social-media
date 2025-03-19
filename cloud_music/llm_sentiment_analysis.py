@@ -3,36 +3,45 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from tqdm import tqdm
 import re
+import pandas as pd
+import os
 
 class AnimeSentimentAnalyzer:
     def __init__(self):
         # 模型配置
         self.model_name = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
         
-        # 特殊参数（关键修复）
+        # 初始化分词器和模型
         self.tokenizer = AutoTokenizer.from_pretrained(
             self.model_name,
-            trust_remote_code=True  # 必须添加此参数
+            trust_remote_code=True
         )
-        
         self.model = AutoModelForCausalLM.from_pretrained(
             self.model_name,
-            trust_remote_code=True,  # 必须添加此参数
-            torch_dtype=torch.bfloat16,  # 量化优化
-            device_map="auto"  # 自动设备分配
+            trust_remote_code=True,
+            torch_dtype=torch.bfloat16,
+            device_map="auto",
+            low_cpu_mem_usage=True
         ).eval()
         
         # 领域提示模板
         self.prompt_template = """[INST] <<SYS>>
-你是一个动漫音乐评论分析专家，请对以下内容进行情感分析：
-1. 识别评论中的专业术语：{terms}
-2. 判断情感倾向（正面/负面/中性）
-3. 简要说明理由
+你是《BanG Dream!》系列专家，请按以下规则分析评论情感：
+1. 必须用【正面/负面/中性】开头
+2. 判断标准：
+    - 正面：出现好评词（神曲、泪目、好听）或感动表情（😭、🎸）
+    - 负面：出现差评词（难听、迷惑、劝退）或负面表情（🤮）
+    - 中性：其他情况
+3. 示例：
+    "春日影吉他solo太棒了！😭" → 正面
+    "母鸡卡剧情太迷惑了" → 负面
+    "周三更新吗？" → 中性
 <</SYS>>
 
-评论内容：{comment} [/INST]
-"""
+立即分析该评论：
+"{comment}"
+[/INST]
+情感分类：【"""
         self.anime_terms = [
             '春日影', 'mygo', 'mujica', 'soyo', '祥子', 'crychic', 
             'ave mujica', '母鸡卡', '灯', '立希', '春日影事变'
@@ -44,65 +53,131 @@ class AnimeSentimentAnalyzer:
         return text[:512]  # 控制输入长度
 
     def analyze(self, text):
-        """核心分析方法"""
-        # 预处理
-        cleaned_text = self.preprocess(text)
+        # 前置规则覆盖
+        text_lower = text.lower()
         
-        # 构建提示词
+        # 特殊句式规则
+        if any(rule in text_lower for rule in ['太好听', '神曲预定', '泪目了']):
+            return "正面"
+        if any(rule in text_lower for rule in ['难听死了', '劝退']):
+            return "负面"
+        
+        # 特定组合检测
+        if ('春日影' in text) and ('双吉他' in text or '为什么' in text):
+            return "正面"
+        if '呜呜呜' in text and ('感动' in text or '哭' in text):
+            return "正面"
+
+        """核心分析方法"""
+        cleaned_text = self.preprocess(text)
         prompt = self.prompt_template.format(
             terms="、".join(self.anime_terms),
             comment=cleaned_text
         )
         
-        # 生成配置
         inputs = self.tokenizer(
             prompt,
             return_tensors="pt"
         ).to(self.model.device)
         
-        # 生成参数
-        generate_kwargs = {
-            "max_new_tokens": 50,
-            "do_sample": False,
-            "temperature": 0.3,
-            "repetition_penalty": 1.1
-        }
-        
-        # 执行推理
         with torch.no_grad():
-            outputs = self.model.generate(**inputs, **generate_kwargs)
+            outputs = self.model.generate(
+                **inputs,
+                max_new_tokens=30,  # 限制输出长度
+                temperature=0.9,    # 增加创造性
+                top_k=50,
+                num_return_sequences=1,
+                pad_token_id=self.tokenizer.eos_token_id,
+                eos_token_id=self.tokenizer.convert_tokens_to_ids(["<|im_end|>"])[0]
+            )
         
-        # 解析结果
         response = self.tokenizer.decode(outputs[0][len(inputs[0]):], skip_special_tokens=True)
-        
-        # 提取情感标签（关键解析逻辑）
-        if "正面" in response:
-            return "正面"
-        elif "负面" in response:
-            return "负面"
-        else:
-            return "中性"
+        return self._parse_response(response)
 
-# 使用示例
+    def _parse_response(self, response):
+        """增强版解析逻辑"""
+        # 强制格式匹配
+        if re.match(r'^正面', response):
+            return "正面"
+        if re.match(r'^负面', response):
+            return "负面"
+        
+        # 表情符号检测
+        emoji_rules = {
+            '😭': '正面',
+            '🎸': '正面',
+            '🤮': '负面'
+        }
+        for emo, label in emoji_rules.items():
+            if emo in response:
+                return label
+        
+        # 关键词强化
+        positive_keywords = {'好听', '豪听', '神曲', '泪目', '感动', '喜欢', '棒', '爽'}
+        negative_keywords = {'难听', '迷惑', '劝退', '垃圾', '失望', '猎奇', '低俗', '灾难'}
+        
+        text = response.lower()
+        if any(kw in text for kw in positive_keywords):
+            return "正面"
+        elif any(kw in text for kw in negative_keywords):
+            return "负面"
+        
+        # 重复字符检测（如"呜呜呜呜"表示感动）
+        if re.search(r'(.)\1{3,}', text):  # 连续4个相同字符
+            return "正面" if '好' in text else "负面"
+        
+        return "中性"
+
+def read_comments(file_path):
+    """读取评论文件"""
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"文件 {file_path} 未找到")
+    
+    with open(file_path, 'r', encoding='utf-8') as f:
+        return [line.strip() for line in f if line.strip()]
+
+def display_results(results):
+    """优化后的结果显示"""
+    df = pd.DataFrame(results)
+    
+    # 情感统计
+    stats = df['情感'].value_counts().reset_index()
+    stats.columns = ['情感类型', '数量']
+    stats['占比'] = (stats['数量'] / len(df) * 100).round(1).astype(str) + '%'
+    
+    # 示例展示
+    samples = df.sample(5, random_state=42)
+    
+    # 控制台输出
+    print("\n🎯 分析结果统计")
+    print(stats.to_markdown(index=False, tablefmt="grid", stralign="center"))
+    
+    print("\n🔍 随机抽样示例")
+    print(samples.to_markdown(index=False, tablefmt="grid", stralign="left"))
+    
+    # 保存完整结果
+    df.to_csv("cloud_music\sentiment_results.csv", index=False, encoding='utf_8_sig')
+    print("\n💾 完整结果已保存至 sentiment_results.csv")
+
 if __name__ == "__main__":
     # 初始化分析器
     analyzer = AnimeSentimentAnalyzer()
     
-    # 测试评论
-    test_comments = [
-        "春日影这首曲子太神了，听得我泪流满面😭",
-        "母鸡卡的剧情发展有点迷，编剧在想什么？",
-        "为什么要演奏春日影！这简直是灾难！"
-    ]
-    
-    # 执行分析
-    results = []
-    for comment in tqdm(test_comments):
-        results.append({
-            "评论": comment,
-            "情感": analyzer.analyze(comment)
-        })
-    
-    # 打印结果
-    import pandas as pd
-    print(pd.DataFrame(results).to_markdown(index=False))
+    try:
+        # 读取评论文件
+        comments = read_comments("cloud_music\Haruhikage.txt")
+        print(f"✅ 成功读取 {len(comments)} 条评论")
+        
+        # 执行分析
+        results = []
+        for comment in tqdm(comments, desc="分析进度", unit="条"):
+            results.append({
+                "评论内容": comment,
+                "情感": analyzer.analyze(comment)
+            })
+        
+        # 显示优化后的结果
+        display_results(results)
+        
+    except Exception as e:
+        print(f"❌ 发生错误: {str(e)}")

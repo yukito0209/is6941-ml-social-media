@@ -26,10 +26,10 @@ class AnimeSentimentAnalyzer:
         
         # 领域提示模板
         self.prompt_template = """[INST] <<SYS>>
-你是《BanG Dream!》系列专家，请按以下规则分析评论情感：
+你是观看过《BanG Dream! It's MyGO!!!!!》一千遍的资深动漫爱好者。现有200+条来自网易云的《春日影》歌曲评论，请按以下规则分析评论情感：
 1. 必须用【正面/负面/中性】开头
 2. 判断标准：
-    - 正面：出现好评词（神曲、泪目、好听）或感动表情（😭、🎸）
+    - 正面：出现好评词（神曲、泪目、好听）或感动表情（😭、🎸）或善意玩梗
     - 负面：出现差评词（难听、迷惑、劝退）或负面表情（🤮）
     - 中性：其他情况
 3. 示例：
@@ -50,7 +50,7 @@ class AnimeSentimentAnalyzer:
     def preprocess(self, text):
         """文本清洗"""
         text = re.sub(r'\$\$\\w\+\?\$\$', '[表情]', text)
-        return text[:512]  # 控制输入长度
+        return text[:1024]  # 控制输入长度
 
     def analyze(self, text):
         # 前置规则覆盖

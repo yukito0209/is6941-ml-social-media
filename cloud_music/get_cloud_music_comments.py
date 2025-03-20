@@ -11,8 +11,8 @@ driver.get('https://music.163.com/#/song?id=2097486090')
 driver.switch_to.frame(0)
 
 # 要抓几页就循环几次
-for page in range(10):
-    time.sleep(2)
+for page in range(903):
+    time.sleep(3)
     # 下拉页面到页面底部
     js = 'document.documentElement.scrollTop = document.documentElement.scrollHeight'
     driver.execute_script(js)
@@ -22,7 +22,7 @@ for page in range(10):
         content = li.find_element(By.CSS_SELECTOR, '.cnt').text
         new_content = re.findall('：(.*)', content)[0]
         print(new_content)
-        with open('cloud_music\\Haruhikage.txt', mode='a', encoding='utf-8') as f:
+        with open('cloud_music\\Haruhikage_comments.txt', mode='a', encoding='utf-8') as f:
             f.write(new_content)
             f.write('\n')
     driver.find_element(By.CSS_SELECTOR, '.znxt').click()

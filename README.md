@@ -2,11 +2,15 @@
 
 IS6941课程小组项目的代码仓库，聚焦机器学习在社交媒体数据分析中的应用。
 
+### 3月21日更新
+
+1. 爬取了完整的网易云《春日影》评论区数据，共计18061条，保存在Haruhikage_comments.txt中。
+
 ### 3月20日更新
 
 1. 新增了对Apple Silicon的支持代码；
 2. 尝试了bert-base-uncased模型，效果不佳；
-3. 新增了empty_model_cache.py用于清理模型缓存。
+3. 新增了empty_model_cache.py用于清理模型缓存；
 4. 尝试了DeepSeek-R1-Distill-Llama-8B模型，效果拔群！！！
 
 ### 3月19日更新

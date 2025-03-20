@@ -8,21 +8,33 @@ import os
 
 class AnimeSentimentAnalyzer:
     def __init__(self):
-        # 模型配置
+        # 模型选择(根据自己电脑的显存量力而行)
+        # macbook使用统一内存架构，因此参考内存，而不是显存
         self.model_name = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
+        # self.model_name = "google-bert/bert-base-uncased" # 烂
+
         
         # 初始化分词器和模型
         self.tokenizer = AutoTokenizer.from_pretrained(
             self.model_name,
             trust_remote_code=True
         )
+        """一般用以下代码"""
+        # self.model = AutoModelForCausalLM.from_pretrained(
+        #     self.model_name,
+        #     trust_remote_code=True,
+        #     torch_dtype=torch.bfloat16,
+        #     device_map="auto",
+        #     low_cpu_mem_usage=True
+        # ).eval()
+        """macbook用以下代码"""
         self.model = AutoModelForCausalLM.from_pretrained(
             self.model_name,
             trust_remote_code=True,
             torch_dtype=torch.bfloat16,
-            device_map="auto",
+            device_map="mps" if torch.backends.mps.is_available() else "auto",
             low_cpu_mem_usage=True
-        ).eval()
+        ).to('mps').eval()
         
         # 领域提示模板
         self.prompt_template = """[INST] <<SYS>>
@@ -53,6 +65,10 @@ class AnimeSentimentAnalyzer:
         return text[:1024]  # 控制输入长度
 
     def analyze(self, text):
+        # 新增设备状态输出
+        print(f"🔥 显存占用: {torch.mps.current_allocated_memory()/1024**2:.2f} MB" 
+            if torch.backends.mps.is_available() else "⏳ CPU模式运行")
+
         # 前置规则覆盖
         text_lower = text.lower()
         
@@ -74,12 +90,30 @@ class AnimeSentimentAnalyzer:
             terms="、".join(self.anime_terms),
             comment=cleaned_text
         )
-        
+        """一般用以下代码"""
+        # inputs = self.tokenizer(
+        #     prompt,
+        #     return_tensors="pt"
+        # ).to(self.model.device)
+        """macbook用以下代码"""
+        device = 'mps' if torch.backends.mps.is_available() else 'cpu'
         inputs = self.tokenizer(
             prompt,
             return_tensors="pt"
-        ).to(self.model.device)
+        ).to(device)
         
+        """一般用以下代码"""
+        # with torch.no_grad():
+        #     outputs = self.model.generate(
+        #         **inputs,
+        #         max_new_tokens=30,  # 限制输出长度
+        #         temperature=0.9,    # 增加创造性
+        #         top_k=50,
+        #         num_return_sequences=1,
+        #         pad_token_id=self.tokenizer.eos_token_id,
+        #         eos_token_id=self.tokenizer.convert_tokens_to_ids(["<|im_end|>"])[0]
+        #     )
+        """macbook用以下代码"""
         with torch.no_grad():
             outputs = self.model.generate(
                 **inputs,
@@ -88,7 +122,10 @@ class AnimeSentimentAnalyzer:
                 top_k=50,
                 num_return_sequences=1,
                 pad_token_id=self.tokenizer.eos_token_id,
-                eos_token_id=self.tokenizer.convert_tokens_to_ids(["<|im_end|>"])[0]
+                eos_token_id=self.tokenizer.convert_tokens_to_ids(["<|im_end|>"])[0],
+                # MPS专属优化参数
+                use_cache=True,
+                do_sample=True if torch.backends.mps.is_available() else False
             )
         
         response = self.tokenizer.decode(outputs[0][len(inputs[0]):], skip_special_tokens=True)
@@ -156,7 +193,7 @@ def display_results(results):
     print(samples.to_markdown(index=False, tablefmt="grid", stralign="left"))
     
     # 保存完整结果
-    df.to_csv("cloud_music\sentiment_results.csv", index=False, encoding='utf_8_sig')
+    df.to_csv("cloud_music/sentiment_results.csv", index=False, encoding='utf_8_sig')
     print("\n💾 完整结果已保存至 sentiment_results.csv")
 
 if __name__ == "__main__":
@@ -165,7 +202,7 @@ if __name__ == "__main__":
     
     try:
         # 读取评论文件
-        comments = read_comments("cloud_music\Haruhikage.txt")
+        comments = read_comments("cloud_music/Haruhikage.txt")
         print(f"✅ 成功读取 {len(comments)} 条评论")
         
         # 执行分析

@@ -4,11 +4,13 @@ IS6941课程小组项目的代码仓库，聚焦机器学习在社交媒体数�
 
 ### 3月20日更新
 
-1. 新增了对Apple Silicon的支持代码，尝试了bert-base-uncased模型。
+1. 新增了对Apple Silicon的支持代码；
+2. 尝试了bert-base-uncased模型，效果不佳；
+3. 新增了empty_model_cache.py用于清理模型缓存。
 
 ### 3月19日更新
 
-1. 使用DeepSeek-R1-Distill-Qwen-1.5B模型进行了情感分析试验，效果不佳，有待后续改进。
+1. 使用DeepSeek-R1-Distill-Qwen-1.5B模型进行了情感分析试验，效果不佳，有待后续改进；
 2. 改进了llm_sentiment_analysis.py，取得了更好的效果。
 
 ### 3月17日更新

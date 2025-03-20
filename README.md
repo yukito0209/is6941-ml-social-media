@@ -7,6 +7,7 @@ IS6941课程小组项目的代码仓库，聚焦机器学习在社交媒体数�
 1. 新增了对Apple Silicon的支持代码；
 2. 尝试了bert-base-uncased模型，效果不佳；
 3. 新增了empty_model_cache.py用于清理模型缓存。
+4. 尝试了DeepSeek-R1-Distill-Llama-8B模型，效果拔群！！！
 
 ### 3月19日更新
 
@@ -24,7 +25,8 @@ IS6941课程小组项目的代码仓库，聚焦机器学习在社交媒体数�
 2. wdw早上7:45起床了 ^ ^ ；
 3. 初步编写完成了对网易云评论区数据进行爬取的代码。
 
-### 模型列表
+### 测试模型列表
 
-1. DeepSeek-R1-Distill-Qwen-1.5B：https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B
-2. bert-base-uncased：https://huggingface.co/google-bert/bert-base-uncased
+1. DeepSeek-R1-Distill-Qwen-1.5B：[deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B · Hugging Face](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B)
+2. DeepSeek-R1-Distill-Llama-8B：[deepseek-ai/DeepSeek-R1-Distill-Llama-8B · Hugging Face](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-8B)
+3. bert-base-uncased：[google-bert/bert-base-uncased · Hugging Face](https://huggingface.co/google-bert/bert-base-uncased)

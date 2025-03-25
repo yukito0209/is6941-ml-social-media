@@ -2,6 +2,12 @@
 
 IS6941课程小组项目的代码仓库，聚焦机器学习在社交媒体数据分析中的应用。
 
+### 3月26日更新
+
+1. 原来的get_bilibili_comments.py代码有些问题，且不易使用，重新写了更方便使用的new_get_bilibili_comments.py替代；
+2. 使用new_get_bilibili_comments.py爬取了BV1dZwLeKEzG视频下的评论区数据，共计8800条，保存为BV1dZwLeKEzG_comments.csv；
+3. new_get_bilibili_comments.py爬取时，最后的小于100条数量的评论无法保存，有待后续改进。
+
 ### 3月25日更新
 
 1. 尝试了对小红书搜索结果的爬取，尚未成功。

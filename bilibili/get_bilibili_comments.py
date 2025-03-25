@@ -1,4 +1,4 @@
-"""爬取视频: BV1K9Hse8EwM"""
+"""爬取教程: BV1K9Hse8EwM"""
 import json
 import requests
 import csv

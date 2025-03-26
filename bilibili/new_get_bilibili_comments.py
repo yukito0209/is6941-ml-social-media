@@ -77,7 +77,7 @@ with open(f'bilibili\{bv_number}_comments.csv', 'w', newline='', encoding='utf-8
                     comment = [
                         data['member'].get('uname', '匿名用户'),
                         data['member'].get('sex', '未知'),
-                        data['reply_control'].get('location', '未知IP'),
+                        data['reply_control'].get('location', '未知IP').replace('IP属地：', ''),
                         data['content'].get('message', '无内容')
                     ]
                     comments_buffer.append(comment)
@@ -103,7 +103,12 @@ with open(f'bilibili\{bv_number}_comments.csv', 'w', newline='', encoding='utf-8
             
     except Exception as e:
         print(f"发生错误：{e}")
-    finally:
+    finally:  # 确保最终执行写入
+        # 最终写入剩余数据
+        if comments_buffer:
+            writer.writerows(comments_buffer)
+            print(f'最终补充写入 {len(comments_buffer)} 条评论')
+            csvfile.flush()  # 强制刷新缓冲区
         print(f"最终爬取数量: {total_comments}")
 
 page.close()

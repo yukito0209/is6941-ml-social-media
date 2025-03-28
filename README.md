@@ -57,5 +57,3 @@ IS6941课程小组项目的代码仓库，聚焦机器学习在社交媒体数�
 ### 计划爬取的视频
 
 1. 【IGN】Switch 2公布预告：https://www.bilibili.com/video/BV1dZwLeKEzG/?spm_id_from=333.337.search-card.all.click&vd_source=04ece31a501c42b11a4a13b2d069946b
-2. 明日方舟活动宣传PV 3个？
-3. 原神活动宣传PV 3个？

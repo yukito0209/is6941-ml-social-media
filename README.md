@@ -43,11 +43,6 @@ IS6941课程小组项目的代码仓库，聚焦机器学习在社交媒体数�
 2. wdw早上7:45起床了 ^ ^ ；
 3. 初步编写完成了对网易云评论区数据进行爬取的代码。
 
-### 备选数据集
-
-1. [Steam Games Dataset](https://www.kaggle.com/datasets/fronkongames/steam-games-dataset)
-2. [2024 U.S. Election Sentiment on X](https://www.kaggle.com/datasets/emirhanai/2024-u-s-election-sentiment-on-x)
-
 ### 测试模型列表
 
 1. DeepSeek-R1-Distill-Qwen-1.5B：[deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B · Hugging Face](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B)

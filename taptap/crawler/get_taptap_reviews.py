@@ -4,10 +4,10 @@ import time
 import random
 from datetime import datetime
 
-app_id = 224267
-output_file = "honkai_star_rail_reviews.csv"
-total_required = 100  # 需要爬取的评论总数
-per_page = 10  # 调整为官方支持的每页数量
+app_id = 316964 # 游戏ID
+output_file = "blue_archive.csv" # 保存的CSV表名
+total_required = 1000  # 需要爬取的评论总数
+per_page = 10  # 每页评论数量
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
@@ -34,7 +34,7 @@ def fetch_reviews():
             
             params = {
                 "app_id": app_id,
-                "sort": "hot",
+                "sort": "new", # 评论排序方式 hot/new
                 "from": (page - 1) * per_page + 1,
                 "limit": per_page,
                 "stage_type": 2,

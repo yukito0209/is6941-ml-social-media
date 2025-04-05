@@ -7,6 +7,7 @@ IS6941课程小组项目的代码仓库，聚焦机器学习在社交媒体数�
 1. 尝试编写了爬取TapTap评论区数据的代码，大失败；
 2. 发现一篇文章：[使用fiddler对手机APP进行抓包_fiddler抓包手机app-CSDN博客](https://blog.csdn.net/xyz846/article/details/78963245)，以及GitHub仓库：[sariel-black/taptap_emotion_analyse: TAPTAP游戏评论的文本挖掘，包括APP爬虫、数据清洗、pyecharts可视化、pytorch框架下LSTM模型情感分析](https://github.com/sariel-black/taptap_emotion_analyse/tree/master)和[guderian110/taptap_review_inexcel: 通过xlwings实现对taptap评论的拉取，存储、情感分析、词云&amp;可视化](https://github.com/guderian110/taptap_review_inexcel)，睡醒再试；
 3. 不用试了，成功了！
+4. 爬取了40款游戏的最新评论数据，每款1000条，共40000条。
 
 ### 3月31日更新
 

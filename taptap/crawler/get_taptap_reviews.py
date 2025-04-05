@@ -4,8 +4,8 @@ import time
 import random
 from datetime import datetime
 
-app_id = 316964 # 游戏ID
-output_file = "blue_archive.csv" # 保存的CSV表名
+app_id = 330259 # 游戏ID
+output_file = "delta_force.csv" # 保存的CSV表名
 total_required = 1000  # 需要爬取的评论总数
 per_page = 10  # 每页评论数量
 

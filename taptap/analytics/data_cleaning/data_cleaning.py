@@ -5,7 +5,7 @@ import re
 import jieba
 
 # ================== 预处理函数 ==================
-def process_comment(text, stopwords):
+def process_comment(text):
     """带停用词过滤的评论处理"""
     if pd.isna(text):
         return ""
@@ -17,16 +17,17 @@ def process_comment(text, stopwords):
     # text = emoji.demojize(text, delimiters=(" ", " "))
     
     # 3. 特殊字符处理
-    text = re.sub(r'[^\w\u4e00-\u9fff\s]', ' ', text)
-    text = re.sub(r'(\!|\?|\.|\,)\1+', r'\1', text)
+    # text = re.sub(r'[^\w\u4e00-\u9fff\s]', ' ', text)
+    # text = re.sub(r'(\!|\?|\.|\,)\1+', r'\1', text)
     
     # 4. 中文分词
-    words = jieba.cut(text, cut_all=False)
+    # words = jieba.cut(text, cut_all=False)
     
     # 5. 停用词过滤
-    filtered = [word.strip() for word in words if word.strip() and word not in stopwords]
+    # filtered = [word.strip() for word in words if word.strip() and word not in stopwords]
     
-    return ' '.join(filtered).strip()
+    # return ' '.join(filtered).strip()
+    return text
 
 # ================== 主处理流程 ==================
 def main():
@@ -50,7 +51,7 @@ def main():
     df['设备型号'] = df['设备型号'].replace('未提供', 'unknown')
     
     # 4. 处理评论内容
-    df['评论内容'] = df['评论内容'].apply(lambda x: process_comment(x, stopwords))
+    df['评论内容'] = df['评论内容'].apply(lambda x: process_comment(x))
     
     # 5. 列名标准化
     column_mapping = {
@@ -81,7 +82,7 @@ def main():
     df = df.reset_index(drop=True)
     
     # 7. 保存结果
-    df.to_csv(r"D:\GitHubRepos\is6941-ml-social-media\taptap\data\integrated\cleaned_taptap_reviews.csv", encoding='utf-8-sig', index=False)
+    df.to_csv(r"D:\GitHubRepos\is6941-ml-social-media\taptap\data\integrated\lm_cleaned_taptap_reviews.csv", encoding='utf-8-sig', index=False)
     
     # 打印处理示例
     print("\n处理前后示例对比：")

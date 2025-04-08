@@ -2,6 +2,13 @@
 
 IS6941课程小组项目的代码仓库，聚焦机器学习在社交媒体数据分析中的应用。
 
+### 已经实验的预训练语言模型
+
+1. [google-bert/bert-base-chinese · Hugging Face](https://huggingface.co/google-bert/bert-base-chinese)
+2. [hfl/chinese-roberta-wwm-ext · Hugging Face](https://huggingface.co/hfl/chinese-roberta-wwm-ext)
+3. [IDEA-CCNL/Erlangshen-Roberta-110M-Sentiment · Hugging Face](https://huggingface.co/IDEA-CCNL/Erlangshen-Roberta-110M-Sentiment)
+4. [uer/gpt2-chinese-cluecorpussmall · Hugging Face](https://huggingface.co/uer/gpt2-chinese-cluecorpussmall)
+
 ### 4月8日更新
 
 1. 尝试了CatBoost方法和一些预训练语言模型。

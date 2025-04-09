@@ -36,6 +36,31 @@ This research not only provides an efficient sentiment analysis tool for game de
 
 The user review data utilized in this study was systematically collected from the official TapTap gaming platform. Employing a multi-criteria selection framework that integrated platform ranking positions, review volume metrics, and game popularity indices, we identified 40 representative game titles. For each selected game, custom web crawlers were developed to extract the most recent 1,000 user reviews, capturing seven key data dimensions: unique user identifier, username, numerical rating score, textual review content, like counts, review publication timestamp, and device model information. Through systematic data aggregation and validation processes, this methodology yielded a comprehensive raw dataset comprising 40,000 distinct user reviews, establishing a robust foundation for subsequent analytical investigations.
 
+The 40 games selected are listed below (arranged by the first letter of the English name):
+
+| 序号 |            英文名            |           中文名           | 序号 |           英文名           |      中文名      |
+| :--: | :---------------------------: | :------------------------: | :--: | :-------------------------: | :--------------: |
+|  01  |       7 Years From Now       |      我在7年后等着你      |  21  |           Justice           |      逆水寒      |
+|  02  |         Aether Gazer         |          深空之眼          |  22  |       Light and Night       |    光与夜之恋    |
+|  03  |           Arknights           |          明日方舟          |  23  |     Love and Deepspace     |     恋与深空     |
+|  04  |           Azur Lane           |          碧蓝航线          |  24  |  Minecraft: Pocket Edition  | 我的世界：移动版 |
+|  05  | BanG Dream! Girls Band Party! | BanG Dream! 少女乐团派对！ |  25  |          Muse Dash          |     喵斯快跑     |
+|  06  |         Blue Archive         |          蔚蓝档案          |  26  |     Naraka: Bladepoint     |     永劫无间     |
+|  07  |           Cytus II           |      音乐世界赛特斯2      |  27  |           Naruto           |     火影忍者     |
+|  08  |          Dead Cells          |          死亡细胞          |  28  |           Onmyoji           |      阴阳师      |
+|  09  |          Delta Force          |         三角洲行动         |  29  |           Phigros           |     菲格罗斯     |
+|  10  |          Eggy Party          |          蛋仔派对          |  30  |        Reverse:1999        |  重返未来：1999  |
+|  11  |       Fate/Grand Order       |       命运-冠位指定       |  31  |         Sausage Man         |     香肠派对     |
+|  12  |        Game for Peace        |          和平精英          |  32  | Sky: Children of the Light |      光·遇      |
+|  13  |        Genshin Impact        |            原神            |  33  | Snowbreak: Containment Zone |     尘白禁区     |
+|  14  |     GRAY RAVEN：PUNISHING     |         战双帕弥什         |  34  |         Soul Knight         |     元气骑士     |
+|  15  |        Honkai Impact 3        |           崩坏3           |  35  |      Teamfight Tactics      |    金铲铲之战    |
+|  16  |       Honkai: Star Rail       |       崩坏：星穹铁道       |  36  |       Tears of Themis       |    未定事件簿    |
+|  17  |        Honor of Kings        |          王者荣耀          |  37  |          Terraria          |     泰拉瑞亚     |
+|  18  |             ICEY             |            艾希            |  38  |      WHERE WINDS MEET      |    燕云十六声    |
+|  19  |          Identity Ⅴ          |          第五人格          |  39  |       Wuthering Waves       |       鸣潮       |
+|  20  |        Infinity Nikki        |          无限暖暖          |  40  |      Zenless Zone Zero      |      绝区零      |
+
 ### 2.2 数据清洗 Data Cleaning
 
 ### 2.3 最终数据集 Final Dataset

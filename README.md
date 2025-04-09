@@ -9,6 +9,11 @@ IS6941课程小组项目的代码仓库，聚焦机器学习在社交媒体数�
 3. [IDEA-CCNL/Erlangshen-Roberta-110M-Sentiment · Hugging Face](https://huggingface.co/IDEA-CCNL/Erlangshen-Roberta-110M-Sentiment)
 4. [uer/gpt2-chinese-cluecorpussmall · Hugging Face](https://huggingface.co/uer/gpt2-chinese-cluecorpussmall)
 
+### 4月9日更新
+
+1. 尝试了投票集成，效果不佳；
+2. 尝试了Stacking集成，准确率提升至0.8531，为目前最佳。
+
 ### 4月8日更新
 
 1. 尝试了CatBoost方法和一些预训练语言模型；

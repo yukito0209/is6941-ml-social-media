@@ -63,6 +63,9 @@ The 40 games selected are listed below (arranged by the first letter of the Engl
 
 ### 2.2 数据清洗 Data Cleaning
 
+- 这部分清洗出了两个CSV文件，taptap\data\integrated\cleaned_taptap_reviews.csv是一般方法用的，taptap\data\integrated\lm_cleaned_taptap_reviews.csv是专门给预训练语言模型用的；
+- 它们的主要区别在于前者对评论内容进行了分词处理，并去除了emoji表情。
+
 ### 2.3 最终数据集 Final Dataset
 
 ## 3 方法论与模型设计
@@ -89,7 +92,11 @@ The 40 games selected are listed below (arranged by the first letter of the Engl
 
 ### 3.4 预训练语言模型
 
-### 3.5 多模型集成
+### 3.5 Stacking集成
+
+- 基模型：XGBoost、CatBoost和bert-base-chinese预训练语言模型；
+- 元模型：Logistic Regression；
+- 完整的notebook文件代码蔚为壮观，参见：taptap\analytics\ensemble_voting\enhanced_ensemble_voting.ipynb。
 
 ## 4 结果与分析
 

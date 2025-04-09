@@ -94,9 +94,15 @@ The 40 games selected are listed below (arranged by the first letter of the Engl
 
 ### 3.5 Stacking集成
 
-- 基模型：XGBoost、CatBoost和bert-base-chinese预训练语言模型；
-- 元模型：Logistic Regression；
-- 完整的notebook文件代码蔚为壮观，参见：taptap\analytics\ensemble_voting\enhanced_ensemble_voting.ipynb。
+基模型：XGBoost、CatBoost和bert-base-chinese预训练语言模型；
+
+元模型：Logistic Regression；
+
+完整的notebook文件代码蔚为壮观，参见：taptap\analytics\ensemble_voting\enhanced_ensemble_voting.ipynb。
+
+Stacking集成方法架构图如下：
+
+![1744212996688](image/project_outline/1744212996688.png)
 
 ## 4 结果与分析
 

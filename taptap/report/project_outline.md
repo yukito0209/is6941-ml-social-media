@@ -99,7 +99,7 @@ The 40 games selected are listed below (arranged by the first letter of the Engl
 
 ### 3.4 预训练语言模型
 
-### 3.5 Stacking集成
+### 3.5 堆叠泛化 **Stacked Generalization**
 
 ~~特别感谢：Gemini-2.5-pro、RTX 4070 SUPER~~
 
@@ -112,6 +112,60 @@ The 40 games selected are listed below (arranged by the first letter of the Engl
 Stacking集成方法架构图如下：
 
 ![1744212996688](image/project_outline/1744212996688.png)
+
+**Stacking (Stacked Generalization)**
+
+**Stacking（堆叠泛化）**
+
+**English:**
+Stacking, short for Stacked Generalization, is an advanced ensemble machine learning technique. It combines multiple different types of machine learning models (called base models or level-0 models) by training a final model (called a meta-learner or level-1 model) to make predictions based on the outputs of the base models.
+
+**中文:**
+Stacking，全称是 Stacked Generalization（堆叠泛化），是一种高级的集成机器学习技术。它通过训练一个最终模型（称为元学习器 meta-learner 或 L1 层模型 level-1 model）来组合多个不同类型的机器学习模型（称为基模型 base models 或 L0 层模型 level-0 models）的预测结果，这个元学习器基于基模型的输出来进行预测。
+
+**How it Works (Simplified):**
+
+**工作原理（简化版）：**
+
+**English:**
+
+1. **Train Base Models (Level-0):** The original training data is used to train several diverse base models (e.g., SVM, RandomForest, KNN, GradientBoosting).
+2. **Generate Predictions for Meta-Learner Training:** To avoid data leakage and overfitting, the predictions from the base models that will be used to train the meta-learner are typically generated using a cross-validation strategy. For each fold in the cross-validation, the base models are trained on the other folds and make predictions on the current fold. These "out-of-fold" predictions form the input features for the meta-learner.
+3. **Train Meta-Learner (Level-1):** A meta-learner (often a relatively simple model like Logistic Regression, Ridge Regression, or even another complex model) is trained using the predictions from the base models (generated in step 2) as input features, and the original target variable as the output label.
+4. **Final Prediction:** When making a prediction on new, unseen data, the input is first passed through all the trained base models. Their predictions are then fed into the trained meta-learner, which produces the final output prediction.
+
+**中文:**
+
+1. **训练基模型（L0 层）：** 使用原始训练数据训练多个不同的基模型（例如：支持向量机 SVM、随机森林 RandomForest、K近邻 KNN、梯度提升 GradientBoosting）。
+2. **为元学习器生成训练预测：** 为了避免数据泄露和过拟合，用于训练元学习器的基模型预测通常是通过交叉验证策略生成的。对于交叉验证中的每一折，基模型在其他折上进行训练，并在当前折上进行预测。这些“折外”（out-of-fold）预测构成了元学习器的输入特征。
+3. **训练元学习器（L1 层）：** 使用基模型在步骤 2 中生成的预测作为输入特征，原始目标变量作为输出标签，来训练一个元学习器（通常是相对简单的模型，如逻辑回归、岭回归，或者也可以是另一个复杂模型）。
+4. **最终预测：** 当对新的、未见过的数据进行预测时，输入数据首先通过所有已训练好的基模型。这些基模型的预测结果随后被输入到已训练好的元学习器中，由元学习器产生最终的输出预测。
+
+**Goal:**
+
+**目标：**
+
+**English:**
+The primary goal of Stacking is to leverage the strengths of multiple different models and combine them intelligently using the meta-learner, often resulting in better predictive performance than any single base model could achieve on its own.
+
+**中文:**
+Stacking 的主要目标是利用多个不同模型的优势，并通过元学习器智能地将它们结合起来，从而通常能获得比任何单个基模型独立运行时更好的预测性能。
+
+**Key Considerations:**
+
+**关键考虑因素：**
+
+**English:**
+
+* **Diversity of Base Models:** Stacking works best when the base models are diverse and make different kinds of errors.
+* **Complexity:** It is generally more complex to implement and computationally more expensive than simpler ensemble methods like Bagging or Boosting.
+* **Overfitting:** Careful implementation (especially regarding the generation of meta-learner training data using cross-validation) is needed to avoid overfitting.
+
+**中文:**
+
+* **基模型的多样性：** 当基模型具有多样性并且会犯不同类型的错误时，Stacking 的效果最好。
+* **复杂性：** 与 Bagging 或 Boosting 等更简单的集成方法相比，Stacking 通常实现起来更复杂，计算成本也更高。
+* **过拟合：** 需要谨慎实施（尤其是在使用交叉验证生成元学习器训练数据方面）以避免过拟合。
 
 ## 4 结果与分析
 

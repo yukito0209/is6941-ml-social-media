@@ -64,13 +64,20 @@ The 40 games selected are listed below (arranged by the first letter of the Engl
 ### 2.2 数据清洗 Data Cleaning
 
 - 这部分清洗出了两个CSV文件，taptap\data\integrated\cleaned_taptap_reviews.csv是一般方法用的，taptap\data\integrated\lm_cleaned_taptap_reviews.csv是专门给预训练语言模型用的；
-- 它们的主要区别在于前者对评论内容进行了分词处理，并去除了emoji表情。
+- 它们的主要区别在于前者对评论内容进行了分词处理，并去除了emoji表情；
+- 具体的清洗步骤参见：taptap\analytics\data_cleaning\data_cleaning.py
 
 ### 2.3 最终数据集 Final Dataset
 
 ## 3 方法论与模型设计
 
+***介绍下面各个模型的时候最好能放上结构图。***
+
 ### 3.1 基于情感词典的模型——基线模型
+
+采用了基于SnowNLP词典的分类方法，效果不佳（0.69），很适合作为基线模型，体现后续其他模型的大幅度提升。
+
+关于SnowNLP：[SnowNLP: Simplified Chinese Text Processing](https://github.com/isnowfy/snownlp)
 
 ### 3.2 传统机器学习模型
 
@@ -93,6 +100,8 @@ The 40 games selected are listed below (arranged by the first letter of the Engl
 ### 3.4 预训练语言模型
 
 ### 3.5 Stacking集成
+
+~~特别感谢：Gemini-2.5-pro、RTX 4070 SUPER~~
 
 基模型：XGBoost、CatBoost和bert-base-chinese预训练语言模型；
 

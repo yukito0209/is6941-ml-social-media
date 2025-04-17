@@ -9,6 +9,10 @@ IS6941课程小组项目的代码仓库，聚焦机器学习在社交媒体数�
 3. [IDEA-CCNL/Erlangshen-Roberta-110M-Sentiment · Hugging Face](https://huggingface.co/IDEA-CCNL/Erlangshen-Roberta-110M-Sentiment)
 4. [uer/gpt2-chinese-cluecorpussmall · Hugging Face](https://huggingface.co/uer/gpt2-chinese-cluecorpussmall)
 
+### 4月17日更新
+
+1. Pre 成功！
+
 ### 4月9日更新
 
 1. 尝试了投票集成，效果不佳；

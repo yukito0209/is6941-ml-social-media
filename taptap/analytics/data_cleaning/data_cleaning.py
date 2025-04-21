@@ -6,7 +6,6 @@ import jieba
 
 # ================== 预处理函数 ==================
 def process_comment(text, stopwords):
-    """带停用词过滤的评论处理"""
     if pd.isna(text):
         return ""
     
